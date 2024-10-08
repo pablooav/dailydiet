@@ -1,53 +1,35 @@
 import { Button } from "@components/Button";
-import { Container, MealTitle, Title } from "./styles";
+import { Container, MealTitle } from "./styles";
 import { SectionList, Text } from "react-native";
 import { MealCard } from "@components/MealCard";
+import { useEffect, useState } from "react";
 
-export function Meals() {
+export type Meal = {
+  title: string;
+  hour: string;
+  type: 'GREEN' | 'RED';
+  day: Date;
+}
 
-  const DATA = [
-    {
-      title: '03/10/2024',
-      data: [{
-        title: 'Chicken Salad',
-        hour: '12:00',
-        type: 'GREEN',
-      }, {
-        title: 'Spaghetti',
-        hour: '19:00',
-        type: 'GREEN',
-      }, {
-        title: 'Rice and Beans',
-        hour: '15:00',
-        type: 'RED',
-      }],
-    },
-    {
-      title: '04/10/2024',
-      data: [{
-        title: 'French Fries',
-        hour: '12:00',
-        type: 'RED',
-      }, {
-        title: 'Salad',
-        hour: '19:00',
-        type: 'GREEN',
-      }, {
-        title: 'Mashed Potatoes',
-        hour: '15:00',
-        type: 'RED',
-      }],
-    },
-  ];
+export type SectionListData = {
+  title: string;
+  data: Meal[];
+}
 
+type Props = {
+  data: SectionListData[];
+}
+
+
+
+export function Meals({ data }: Props) {
+  
 
   return (
     <Container>
-      <Title>Refeições</Title>
-      <Button title="Nova refeição"></Button>
-
+     
       <SectionList
-        sections={DATA}
+        sections={data}
         keyExtractor={(item, index) => item.title + index}
         renderItem={({item}) => (
           <MealCard title={item.title} hour={item.hour} type={item.type} />
